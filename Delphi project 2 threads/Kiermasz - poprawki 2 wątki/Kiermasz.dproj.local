@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>1899-12-30 00:00:00.000.246,=C:\Users\k.holubowicz\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.279,C:\Users\k.holubowicz\Documents\Embarcadero\Studio\Projects\Projekt 2\uMainPanel.dfm=C:\Users\k.holubowicz\Documents\Embarcadero\Studio\Projects\Projekt 2\Unit1.dfm</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.539,C:\Users\k.holubowicz\Documents\Embarcadero\Studio\Projects\Projekt 2\Unit2.dfm=C:\Users\k.holubowicz\Documents\Embarcadero\Studio\Projects\Projekt 2\uEditWorkerData.dfm</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.539,C:\Users\k.holubowicz\Documents\Embarcadero\Studio\Projects\Projekt 2\Unit2.pas=C:\Users\k.holubowicz\Documents\Embarcadero\Studio\Projects\Projekt 2\uEditWorkerData.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.650,=C:\Users\k.holubowicz\Documents\Embarcadero\Studio\Projects\Projekt 2\Unit2.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.478,C:\Users\k.holubowicz\Documents\Embarcadero\Studio\Projects\Projekt 2\Kiermasz with thread\Kiermasz 2 threads\Unit1.pas=C:\Users\k.holubowicz\Documents\Embarcadero\Studio\Projects\Projekt 2\Kiermasz with thread\Kiermasz 2 threads\ImportDataFromCSVToDBThread.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.386,=C:\Users\k.holubowicz\Documents\Embarcadero\Studio\Projects\Projekt 2\Kiermasz with thread\Kiermasz 2 threads\Unit1.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.279,C:\Users\k.holubowicz\Documents\Embarcadero\Studio\Projects\Projekt 2\uMainPanel.pas=C:\Users\k.holubowicz\Documents\Embarcadero\Studio\Projects\Projekt 2\Unit1.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.788,=C:\Users\k.holubowicz\Documents\Embarcadero\Studio\Projects\Projekt 2\Kiermasz with thread\Unit1.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.893,C:\Users\k.holubowicz\Documents\Embarcadero\Studio\Projects\Projekt 2\Kiermasz with thread\Unit1.pas=C:\Users\k.holubowicz\Documents\Embarcadero\Studio\Projects\Projekt 2\Kiermasz with thread\tGetWorkersDataThread.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.015,=C:\Users\k.holubowicz\Documents\Embarcadero\Studio\Projects\Projekt 2\Unit1.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.532,C:\Users\k.holubowicz\Documents\Embarcadero\Studio\Projects\Projekt 2\Kiermasz with thread\tGetWorkersDataThread.pas=C:\Users\k.holubowicz\Documents\Embarcadero\Studio\Projects\Projekt 2\Kiermasz with thread\GetWorkersDataThread.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.318,C:\Users\k.holubowicz\Documents\Embarcadero\Studio\Projects\Projekt 2\Project2.dproj=C:\Users\k.holubowicz\Documents\Embarcadero\Studio\Projects\Project2.dproj</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.321,C:\Users\k.holubowicz\Documents\Embarcadero\Studio\Projects\Projekt 2\Unit1.dfm=C:\Users\k.holubowicz\Documents\Embarcadero\Studio\Projects\Unit1.dfm</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.604,C:\Users\k.holubowicz\Documents\Embarcadero\Studio\Projects\Projekt 2\Unit1.dfm=C:\Users\k.holubowicz\Documents\Embarcadero\Studio\Projects\Projekt 2\uListOfWorkers.dfm</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.803,C:\Users\k.holubowicz\Documents\Embarcadero\Studio\Projects\Projekt 2\Unit1.dfm=C:\Users\k.holubowicz\Documents\Embarcadero\Studio\Projects\Projekt 2\uInfoBox.dfm</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.084,=C:\Users\k.holubowicz\Documents\Embarcadero\Studio\Projects\Projekt 2\Unit1.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.803,C:\Users\k.holubowicz\Documents\Embarcadero\Studio\Projects\Projekt 2\Unit1.pas=C:\Users\k.holubowicz\Documents\Embarcadero\Studio\Projects\Projekt 2\uInfoBox.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.321,C:\Users\k.holubowicz\Documents\Embarcadero\Studio\Projects\Projekt 2\Unit1.pas=C:\Users\k.holubowicz\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.604,C:\Users\k.holubowicz\Documents\Embarcadero\Studio\Projects\Projekt 2\Unit1.pas=C:\Users\k.holubowicz\Documents\Embarcadero\Studio\Projects\Projekt 2\uListOfWorkers.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.134,C:\Users\k.holubowicz\Documents\Embarcadero\Studio\Projects\Projekt 2\Kiermasz.dproj=C:\Users\k.holubowicz\Documents\Embarcadero\Studio\Projects\Projekt 2\Project2.dproj</Transaction>
+  </Transactions>
+</BorlandProject>

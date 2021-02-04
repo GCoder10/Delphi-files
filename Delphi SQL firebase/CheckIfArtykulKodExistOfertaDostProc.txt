@@ -1,0 +1,222 @@
+create or alter procedure IMPORT_OFFER_CHECK_ARTICLE (
+    I_CLIENTS_ID integer,
+    I_ARTICLE_CODE varchar(15))
+returns (
+    ERROR_HANDLER varchar(60),
+    OFFER_WITH_ARTICLE_EXIST varchar(50),
+    COUNT_OFFERS varchar(60),
+    AMOUNT_FROM_OF_ARTICLE double precision,
+    AMOUNT_TO_OF_ARTICLE double precision,
+    AMOUNT_OF_ARTICLE varchar(50),
+    INFO_IF_MORE_THAN_0_OFFERS varchar(50),
+    OFFER_PRICE_TO_RETURN double precision,
+    DATES_TO_RETURN varchar(300),
+    STATUS_TO_RETURN varchar(50),
+    CURRENCY_TO_RETURN varchar(150),
+    DELIVERY_TIME_TO_RETURN varchar(150),
+    MATURITY_TO_RETURN varchar(150),
+    UNIT_INFO_FOR_OFFER_TO_RETURN varchar(300))
+AS
+declare variable COUNT_ARTICLES integer;
+declare variable ARTICLE_ID integer;
+declare variable OFERTA_DOST_ID integer;
+declare variable CURRENCY_ID integer;
+declare variable AMOUNT_FROM double precision;
+declare variable AMOUNT_TO double precision;
+declare variable OFFER_PRICE double precision;
+declare variable DATE_FROM date;
+declare variable DATE_TO date;
+declare variable STATUS integer;
+declare variable CURRENCY_CODE varchar(50);
+declare variable DELIVERY_TIME integer;
+declare variable MATURITY integer;
+declare variable UNIT_ID_OF_ARTICLE integer;
+declare variable UNIT_CODE varchar(50);
+declare variable UNIT_DESCRIPTION varchar(50);
+begin
+        if (:i_article_code is not null and :i_article_code <> '') then
+        begin
+          select
+            artykul.artykul_id
+          from artykul
+          where
+            upper(trim(artykul.artykul_kod)) = upper(trim(:i_article_code))
+          into
+            :article_id;
+        end
+
+        if (:article_id is null or :article_id <= 0) then
+            error_handler = 'Brak artykulu w bazie - nierozpoznany artykul_kod ';
+
+        if (:article_id <> 0 and :article_id is not null) then
+        begin
+           select
+                 count(oferta_dost.artykul_id)
+           from oferta_dost
+           where
+                oferta_dost.artykul_id = :article_id AND
+                oferta_dost.klienci_id = :i_clients_id
+           into
+               :count_articles;
+        end
+
+        if (:count_articles <> 0 and :article_id <> 0 and :article_id is not null) then
+               offer_with_article_exist = 'Dany klient posiada juz ta oferte ';
+        else begin
+               if (:count_articles = 0 and :article_id <> 0 and :article_id is not null) then
+                   offer_with_article_exist = 'Dany klient nie posiada tej oferty ';
+        end
+
+        if (:count_articles <> 0 and :article_id <> 0 and :article_id is not null) then
+               count_offers = '|| Dany klient posiada: ' || :count_articles || ' ofert ';
+
+        if (:count_articles > 0) then
+        begin
+
+          info_if_more_than_0_offers = '|| Info o ofercie: ';
+          if (:count_articles > 1) then
+          begin
+               info_if_more_than_0_offers = '|| Wszystkie oferty klienta: ';
+          end
+  
+          if (:article_id <> 0 and :article_id is not null) then
+          begin
+                 select
+                      oferta_dost.oferta_dost_id,
+                      oferta_dost.waluta_id,
+                      oferta_dost.wazna_od,
+                      oferta_dost.wazna_do,
+                      oferta_dost.czas_dostawy,
+                      oferta_dost.termin_platnosci,
+                      oferta_dost.status
+                 from oferta_dost
+                 where
+                      oferta_dost.artykul_id = :article_id AND
+                      oferta_dost.klienci_id = :i_clients_id
+                 into
+                      :oferta_dost_id,
+                      :currency_id,
+                      :date_from,
+                      :date_to,
+                      :delivery_time,
+                      :maturity,
+                      :status;
+          end
+
+          if (:currency_id <> 0 or :currency_id = 0 and :currency_id is not null) then
+          begin
+                 select
+                       waluta.waluta_kod
+                 from waluta
+                 where
+                      waluta.waluta_id = :currency_id
+                 into
+                      :currency_code;
+
+
+                 currency_to_return = '|| Waluta dla tej oferty: ' || :currency_code || ' ';
+          end
+          else
+          begin
+                 currency_to_return = '|| Waluta dla tej oferty nie zostala wprowadzona ';
+          end
+
+          if (:delivery_time <> 0 and :delivery_time is not null) then
+          begin
+                 delivery_time_to_return = '|| Czas dostawy dla oferty: ' || :delivery_time || ' ';
+          end
+          else
+          begin
+                 delivery_time_to_return = '|| Czas dostawy nie zostal zdefiniowany ';
+          end
+
+          if (:maturity <> 0 and :maturity is not null) then
+          begin
+                 maturity_to_return = '|| Termin platnosci dla oferty: ' || :maturity || ' ';
+          end
+          else
+          begin
+                 maturity_to_return = '|| Termin platnosci nie zostal zdefiniowany ';
+          end
+
+          if (:article_id <> 0 and :article_id is not null) then
+          begin
+               select
+                     oferta_dost.jednostki_dost_id
+               from oferta_dost
+               where
+                    oferta_dost.artykul_id = :article_id AND
+                    oferta_dost.klienci_id = :i_clients_id
+               into
+                    :unit_id_of_article;
+          end
+
+          if (:unit_id_of_article <> 0 and :unit_id_of_article is not null) then
+          begin
+               select
+                     jednostki.jednostki_kod,
+                     jednostki.jednostki_opis
+               from jednostki
+               where
+                     jednostki.jednostki_id = :unit_id_of_article
+               into
+                   :unit_code,
+                   :unit_description;
+
+
+               unit_info_for_offer_to_return = '|| Jednostka kod: ' || :unit_code || ' Jednostka opis: ' || :unit_description || ' ';
+          end else
+          begin
+               unit_info_for_offer_to_return = '|| Jednostka dla tej oferty nie zostala zdefiniowana ';
+          end
+  
+          if (:oferta_dost_id <> 0 and :oferta_dost_id is not null) then
+          begin
+               select
+                     oferta_dost_spec.ilosc_od,
+                     oferta_dost_spec.ilosc_do,
+                     oferta_dost_spec.cena
+               from oferta_dost_spec
+               where
+                    oferta_dost_spec.oferta_dost_id = :oferta_dost_id
+               into
+                   :amount_from,
+                   :amount_to,
+                   :offer_price;
+          end
+          
+          if(:amount_from >= 0 and :amount_to <> 0 and :article_id <> 0 and :article_id is not null) then
+          begin
+               amount_from_of_article = :amount_from;
+               amount_to_of_article = :amount_to;
+               offer_price_to_return = :offer_price;
+               dates_to_return = '|| Data od: ' || DateToStr(:date_from,'%d.%m.%y') || ' do ' || DateToStr(:date_to,'%d.%m.%y') || ' ';
+          end
+          else
+          begin
+               amount_of_article = '|| Laczna ilosc - 0 ';
+          end
+
+          if (:status = 0) then
+          begin
+               status_to_return = '|| Status: Brak oferty ';
+          end
+
+          if (:status = 1) then
+          begin
+               status_to_return = '|| Status: Oferta domyslna ';
+          end
+
+          if (:status = 2) then
+          begin
+               status_to_return = '|| Status: Oferta aktywna ';
+          end
+
+          if (:status = 3) then
+          begin
+               status_to_return = '|| Status: Oferta nieaktywna ';
+          end
+
+        end
+        suspend;
+end

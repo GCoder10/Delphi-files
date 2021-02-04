@@ -1,0 +1,24 @@
+create or alter procedure WORKERS_PURCHASE (
+    I_USER_ID varchar(100),
+    I_ODWO_ID integer,
+    I_LABEL varchar(200),
+    I_NAME varchar(100),
+    I_AMOUNT integer,
+    I_ADDRESS varchar(150),
+    I_POST_CODE varchar(150),
+    I_STREET varchar(200),
+    I_INSTITUTION varchar(30))
+as
+begin
+         insert into artykul_kiermasz (artykul_kiermasz_id, user_id, etykieta, date_insert, ilosc, adres, kod_pocztowy, ulica, zaklad)
+         values (gen_id(gen_artykul_kiermasz_id, 1), :i_user_id, :i_label, current_timestamp, :i_amount, :i_address, :i_post_code, :i_street, :i_institution);
+
+
+         update artykul 
+         set artykul.ilosc = artykul.ilosc - :i_amount
+         where
+                artykul.odwo_id = :i_odwo_id and
+                artykul.nazwa = :i_name;
+
+    suspend;
+end

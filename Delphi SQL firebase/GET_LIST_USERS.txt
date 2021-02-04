@@ -1,0 +1,47 @@
+create or alter procedure GET_LIST_USERS
+returns (
+    USER_ID integer,
+    NR_PERSONALNY integer,
+    IMIE varchar(150),
+    NAZWISKO varchar(150),
+    ULICA varchar(150),
+    NR_DOMU varchar(50),
+    NR_MIESZKANIA varchar(50),
+    KOD_POCZTOWY varchar(50),
+    MIASTO varchar(100),
+    ZAKLAD varchar(100),
+    ZAKLAD_ID integer)
+as
+begin
+FOR
+  EXECUTE STATEMENT('
+                        SELECT
+su.slownik_uzytkownik_id as USER_ID ,
+su.nr_personalny as NR_PERSONALNY,
+su.imie as IMIE,
+su.nazwisko as NAZWISKO,
+
+sa.ulica as ULICA,
+sa.nr_domu as NR_DOMU,
+sa.nr_mieszkania as NR_MIESZKANIA,
+skp.kod_pocztowy as KOD_POCZTOWY,
+skp.miasto as MIASTO,
+sz.nazwa as ZAKLAD,
+sz.slownik_zaklad_id as ZAKLAD_ID
+ FROM SLOWNIK_UZYTKOWNIK SU
+left join kontrahent kon on upper(su.nazwisko||'' ''||su.imie)=upper(trim(kon.firma)) or  upper(su.imie||'' ''||su.nazwisko)=upper(trim(kon.firma))
+left join slownik_adres sa on kon.slownik_adres_id=sa.slownik_adres_id
+left join slownik_kod_pocztowy skp on sa.slownik_kod_pocztowy_id=skp.slownik_kod_pocztowy_id
+left join slownik_kraj sk on skp.slownik_kraj_id=sk.slownik_kraj_id
+inner join slownik_zaklad sz on su.slownik_zaklad_id=sz.slownik_zaklad_id
+WHERE
+su.zatrudniony=1 and  sa.slownik_adres_id<>0 and  su.nr_personalny is not null 
+                    ')
+
+         ON EXTERNAL '10.10.10.100:dfm' AS  USER 'kiermasz' PASSWORD '12345678' ROLE 'USER'
+                            INTO :user_id,:nr_personalny,:imie,:nazwisko ,:ulica,:nr_domu,:nr_mieszkania,:kod_pocztowy,:miasto,:zaklad,:zaklad_id
+            DO
+            BEGIN
+                            suspend;
+                            END
+end

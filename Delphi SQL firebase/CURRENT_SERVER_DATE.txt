@@ -1,0 +1,9 @@
+create or alter procedure CURRENT_SERVER_DATE
+returns (
+    CURRENT_DATE_TO_RETURN timestamp
+)
+as
+begin
+            current_date_to_return = current_timestamp;
+    suspend;
+end

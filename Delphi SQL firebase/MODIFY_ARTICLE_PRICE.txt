@@ -1,0 +1,17 @@
+create or alter procedure MODIFY_ARTICLE_PRICE (
+    I_ODWO_ID integer,
+    I_AB varchar(150),
+    I_NAME varchar(100),
+    I_PRICE decimal(15,2))
+as
+begin
+
+         update artykul 
+         set artykul.cena = :i_price
+         where
+                artykul.odwo_id = :i_odwo_id and
+                artykul.ab = :i_ab and
+                artykul.nazwa = :i_name;
+
+    suspend;
+end

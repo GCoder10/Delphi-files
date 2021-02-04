@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2019-06-11 12:51:10.994.pas,C:\Users\kacper.holubowicz\Documents\RAD Studio\Projects\Unit1.pas=C:\Users\kacper.holubowicz\Documents\RAD Studio\Projects\Excel2DB\Unit1.pas</Transaction>
+    <Transaction>2019-06-11 12:51:10.994.dfm,C:\Users\kacper.holubowicz\Documents\RAD Studio\Projects\Unit1.dfm=C:\Users\kacper.holubowicz\Documents\RAD Studio\Projects\Excel2DB\Unit1.dfm</Transaction>
+    <Transaction>2019-06-11 13:02:11.155.pas,C:\Users\kacper.holubowicz\Documents\RAD Studio\Projects\Excel2DB\Unit1.pas=C:\Users\kacper.holubowicz\Documents\RAD Studio\Projects\Excel2DB\uExcel2DB.pas</Transaction>
+    <Transaction>2019-06-11 13:02:11.155.dfm,C:\Users\kacper.holubowicz\Documents\RAD Studio\Projects\Excel2DB\Unit1.dfm=C:\Users\kacper.holubowicz\Documents\RAD Studio\Projects\Excel2DB\uExcel2DB.dfm</Transaction>
+    <Transaction>2019-06-11 13:03:12.448.dproj,C:\Users\kacper.holubowicz\Documents\RAD Studio\Projects\Project2.dproj=C:\Users\kacper.holubowicz\Documents\RAD Studio\Projects\Excel2DB\Project2.dproj</Transaction>
+    <Transaction>2019-06-12 08:31:52.061.pas,C:\Users\kacper.holubowicz\Documents\RAD Studio\Projects\Excel2DB\umVarOperator.pas=</Transaction>
+    <Transaction>2019-06-12 08:31:52.061.dfm,C:\Users\kacper.holubowicz\Documents\RAD Studio\Projects\Excel2DB\umVarOperator.dfm=</Transaction>
+    <Transaction>2019-06-12 08:38:45.867.pas,C:\Users\kacper.holubowicz\Documents\RAD Studio\Projects\Excel2DB\umVarOperator.pas=</Transaction>
+    <Transaction>2019-06-12 08:38:45.867.dfm,C:\Users\kacper.holubowicz\Documents\RAD Studio\Projects\Excel2DB\umVarOperator.dfm=</Transaction>
+    <Transaction>2019-06-12 08:40:31.773.pas,C:\Users\kacper.holubowicz\Documents\RAD Studio\Projects\Excel2DB\umVarOperator.pas=</Transaction>
+    <Transaction>2019-06-12 08:40:31.773.dfm,C:\Users\kacper.holubowicz\Documents\RAD Studio\Projects\Excel2DB\umVarOperator.dfm=</Transaction>
+    <Transaction>2019-06-12 08:43:19.399.pas,C:\Users\kacper.holubowicz\Documents\RAD Studio\Projects\Excel2DB\umVarOperator.pas=</Transaction>
+    <Transaction>2019-06-12 08:43:19.399.dfm,C:\Users\kacper.holubowicz\Documents\RAD Studio\Projects\Excel2DB\umVarOperator.dfm=</Transaction>
+    <Transaction>2019-06-12 08:45:56.659.pas,C:\Users\kacper.holubowicz\Documents\RAD Studio\Projects\Excel2DB\VarOperator.pas=</Transaction>
+    <Transaction>2019-06-17 10:51:25.295.pas,C:\Users\kacper.holubowicz\Documents\RAD Studio\Projects\Excel2DB\Unit1.pas=C:\Users\kacper.holubowicz\Documents\RAD Studio\Projects\Excel2DB\uExit.pas</Transaction>
+    <Transaction>2019-06-17 10:51:25.295.dfm,C:\Users\kacper.holubowicz\Documents\RAD Studio\Projects\Excel2DB\Unit1.dfm=C:\Users\kacper.holubowicz\Documents\RAD Studio\Projects\Excel2DB\uExit.dfm</Transaction>
+    <Transaction>2019-06-17 12:56:06.465.pas,C:\Users\kacper.holubowicz\Documents\RAD Studio\Projects\Excel2DB\uExit.pas=</Transaction>
+    <Transaction>2019-06-17 12:56:06.465.dfm,C:\Users\kacper.holubowicz\Documents\RAD Studio\Projects\Excel2DB\uExit.dfm=</Transaction>
+    <Transaction>2019-07-03 09:17:44.682.pas,C:\Users\kacper.holubowicz\Documents\RAD Studio\Projects\Excel2DB\Unit1.pas=C:\Users\kacper.holubowicz\Documents\RAD Studio\Projects\Excel2DB\uPrepareView.pas</Transaction>
+    <Transaction>2019-07-03 09:17:44.682.dfm,C:\Users\kacper.holubowicz\Documents\RAD Studio\Projects\Excel2DB\Unit1.dfm=C:\Users\kacper.holubowicz\Documents\RAD Studio\Projects\Excel2DB\uPrepareView.dfm</Transaction>
+  </Transactions>
+</BorlandProject>

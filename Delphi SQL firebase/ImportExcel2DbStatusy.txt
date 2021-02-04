@@ -1,0 +1,4 @@
+0-brak
+1-domyslna
+2-aktywna
+3-nieaktywna

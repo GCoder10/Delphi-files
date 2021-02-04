@@ -1,0 +1,11 @@
+create or alter procedure ROLLBACK_LABEL_PURCHASE (
+    I_LABEL varchar(200))
+as
+begin
+         delete from artykul_kiermasz
+         where
+                artykul_kiermasz.etykieta = :i_label and
+                artykul_kiermasz.date_insert = (select MAX(artykul_kiermasz.date_insert) from artykul_kiermasz where artykul_kiermasz.etykieta = :i_label);
+
+    suspend;
+end

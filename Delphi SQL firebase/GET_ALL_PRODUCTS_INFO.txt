@@ -1,0 +1,48 @@
+create or alter procedure GET_ALL_PRODUCTS_INFO
+returns (
+    ODWO_ID_TO_RETURN integer,
+    COUNT_AMOUNT_OF_ARTICLES integer,
+    AB_TO_RETURN varchar(150),
+    NAME_TO_RETURN varchar(100),
+    NAME_OF_FABRIC_TO_RETURN varchar(200),
+    NAME_OF_FABRIC2_TO_RETURN varchar(200),
+    NAME_OF_CORPUS_TO_RETURN varchar(200),
+    AMOUNT_TO_RETURN integer,
+    PARENT_OF_ARTICLE_TO_RETURN integer,
+    QBM_TO_RETURN decimal(15,2),
+    PRICE_TO_RETURN decimal(15,2))
+as
+begin
+
+         select
+                count(artykul.ilosc)
+         from artykul
+         into
+                :count_amount_of_articles;
+
+
+         for select
+            artykul.odwo_id,
+            artykul.ab,
+            artykul.nazwa,
+            artykul.tkanina_nazwa,
+            artykul.tkanina_nazwa2,
+            artykul.nazwa_korpusu,
+            artykul.ilosc,
+            artykul.artykul_rodzic_id,
+            artykul.qbm,
+            artykul.cena
+         from artykul
+         into
+            :odwo_id_to_return,
+            :ab_to_return,
+            :name_to_return,
+            :name_of_fabric_to_return,
+            :name_of_fabric2_to_return,
+            :name_of_corpus_to_return,
+            :amount_to_return,
+            :parent_of_article_to_return,
+            :qbm_to_return,
+            :price_to_return
+         do suspend;
+end

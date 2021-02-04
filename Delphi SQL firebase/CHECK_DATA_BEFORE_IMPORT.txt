@@ -1,0 +1,29 @@
+create or alter procedure CHECK_DATA_BEFORE_IMPORT (
+    I_ODWO_ID integer,
+    I_AB varchar(150),
+    I_NAME varchar(80),
+    I_NAME_OF_FABRIC varchar(80),
+    I_NAME_OF_FABRIC2 varchar(80),
+    I_NAME_OF_CORPUS varchar(80),
+    I_AMOUNT integer,
+    I_PARENT_OF_ARTICLE_ID integer)
+returns (
+    COUNT_ARTICLE_TO_RETURN integer)
+as
+begin
+         select
+            count(artykul.odwo_id)
+         from artykul
+         where
+            artykul.odwo_id = :i_odwo_id AND
+            artykul.ab = :i_ab AND
+            artykul.nazwa = :i_name AND
+            artykul.tkanina_nazwa = :i_name_of_fabric AND
+            artykul.tkanina_nazwa2 = :i_name_of_fabric2 AND
+            artykul.nazwa_korpusu = :i_name_of_corpus AND
+            artykul.ilosc = :i_amount AND
+            artykul.artykul_rodzic_id = :i_parent_of_article_id
+         into
+            :count_article_to_return;
+    suspend;
+end

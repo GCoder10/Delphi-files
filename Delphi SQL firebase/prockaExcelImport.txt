@@ -1,0 +1,209 @@
+create or alter procedure IMPORT_OFFERS_FROM_EXCEL (
+    I_AMOUNT_FROM double precision,
+    I_AMOUNT_TO double precision,
+    I_DELIVERY_TIME integer,
+    I_MATURITY integer,
+    I_PRICE double precision,
+    I_DATE_FROM date,
+    I_DATE_TO date,
+    I_CLIENTS_ID integer,
+    I_CURRENCY_ID integer,
+    I_ARTICLE_CODE varchar(15),
+    I_STATUS_FOR_OFFER integer,
+    I_UPDATE_MODE varchar(50))
+AS
+declare variable ARTICLE_ID integer;
+declare variable OFERTA_DOST_ID integer;
+declare variable ARTICLE_CODE varchar(15);
+declare variable COUNT_ARTICLES integer;
+declare variable UNIT_ID_OF_ARTICLE integer;
+begin
+        if (:i_article_code is not null and :i_article_code <> '') then
+          select
+            artykul.artykul_kod,
+            artykul.artykul_id
+          from artykul
+          where
+            upper(trim(artykul.artykul_kod)) = upper(trim(:i_article_code))
+          into
+            :article_code,
+            :article_id;
+
+
+
+
+
+        if (:article_id <> 0 and :article_id is not null and :i_price > 0 and :i_price is not null) then
+        begin
+
+              if (:i_update_mode = 'Insert') then
+              begin
+                    if (:article_id <> 0 and :article_id is not null) then
+                    begin
+                       select
+                             count(oferta_dost.artykul_id)
+                       from oferta_dost
+                       where
+                            oferta_dost.artykul_id = :article_id AND
+                            oferta_dost.klienci_id = :i_clients_id
+                       into
+                           :count_articles;
+
+
+                       select
+                             artykul.jednostki_id
+                       from artykul
+                       where
+                            artykul.artykul_id = :article_id
+                       into
+                           :unit_id_of_article;
+                    end
+            
+                    if (:count_articles = 0) then
+                    begin
+                          if (:article_id <> 0 and :article_id is not null and :unit_id_of_article <> 0 or :unit_id_of_article = 0 and :unit_id_of_article is not null) then
+                          begin
+                              insert into oferta_dost (oferta_dost_id, cena, klienci_id, waluta_id, wazna_do, wazna_od, czas_dostawy, termin_platnosci, jednostki_dost_id, artykul_id, status)
+                              values (gen_id(set_oferta_dost_id, 1), :i_price, :i_clients_id, :i_currency_id, :i_date_to, :i_date_from, :i_delivery_time, :i_maturity, :unit_id_of_article, :article_id, :i_status_for_offer)
+                              returning
+                                oferta_dost_id
+                              into
+                                :oferta_dost_id;
+                    
+                     
+                              insert into oferta_dost_spec (oferta_dost_spec_id, oferta_dost_id, cena, ilosc_od, ilosc_do)
+                              values (gen_id(gen_oferta_dost_spec_id, 1), :oferta_dost_id, :i_price, :i_amount_from, :i_amount_to);
+                         end
+                    end
+             end
+             if (:i_update_mode = 'Update') then
+             begin
+
+                    if (:article_id <> 0 and :article_id is not null) then
+                    begin
+                       select
+                             count(oferta_dost.artykul_id)
+                       from oferta_dost
+                       where
+                            oferta_dost.artykul_id = :article_id AND
+                            oferta_dost.klienci_id = :i_clients_id
+                       into
+                           :count_articles;
+                    end
+            
+                    if (:count_articles >= 1) then
+                    begin
+                          if (:article_id <> 0 and :article_id is not null) then
+                          begin
+                               select
+                                    oferta_dost.oferta_dost_id
+                               from oferta_dost
+                               where
+                                    oferta_dost.artykul_id = :article_id AND
+                                    oferta_dost.klienci_id = :i_clients_id
+                               into
+                                    :oferta_dost_id;
+
+                              update oferta_dost
+                              set
+                                  oferta_dost.cena = :i_price,
+                                  oferta_dost.wazna_do = :i_date_to,
+                                  oferta_dost.wazna_od = :i_date_from,
+                                  oferta_dost.waluta_id = :i_currency_id,
+                                  oferta_dost.czas_dostawy = :i_delivery_time,
+                                  oferta_dost.termin_platnosci = :i_maturity,
+                                  oferta_dost.status = :i_status_for_offer
+                              where
+                                   oferta_dost.oferta_dost_id = :oferta_dost_id;
+
+                              update oferta_dost_spec
+                              set
+                                  oferta_dost_spec.cena = :i_price,
+                                  oferta_dost_spec.ilosc_od = :i_amount_from,
+                                  oferta_dost_spec.ilosc_do = :i_amount_to
+                              where
+                                  oferta_dost_spec.oferta_dost_id = :oferta_dost_id;
+                         end
+                    end
+
+             end
+             if (i_update_mode = 'Smart') then
+             begin
+
+                  if (:article_id <> 0 and :article_id is not null) then
+                  begin
+                       select
+                            count(oferta_dost.artykul_id)
+                       from oferta_dost
+                       where
+                            oferta_dost.artykul_id = :article_id AND
+                            oferta_dost.klienci_id = :i_clients_id
+                       into
+                            :count_articles;
+
+
+                       select
+                             artykul.jednostki_id
+                       from artykul
+                       where
+                            artykul.artykul_id = :article_id
+                       into
+                           :unit_id_of_article;
+                  end
+
+                  if (:count_articles = 0) then
+                  begin
+                       if (:article_id <> 0 and :article_id is not null and :unit_id_of_article <> 0 or :unit_id_of_article = 0 and :unit_id_of_article is not null) then
+                       begin
+                            insert into oferta_dost (oferta_dost_id, cena, klienci_id, waluta_id, wazna_do, wazna_od, czas_dostawy, termin_platnosci, jednostki_dost_id, artykul_id, status)
+                            values (gen_id(set_oferta_dost_id, 1), :i_price, :i_clients_id, :i_currency_id, :i_date_to, :i_date_from, :i_delivery_time, :i_maturity, :unit_id_of_article, :article_id, :i_status_for_offer)
+                            returning
+                                oferta_dost_id
+                            into
+                                :oferta_dost_id;
+                    
+                     
+                            insert into oferta_dost_spec (oferta_dost_spec_id, oferta_dost_id, cena, ilosc_od, ilosc_do)
+                            values (gen_id(gen_oferta_dost_spec_id, 1), :oferta_dost_id, :i_price, :i_amount_from, :i_amount_to);
+                       end
+                  end
+
+                  if (:count_articles >= 1) then
+                  begin
+                          if (:article_id <> 0 and :article_id is not null) then
+                          begin
+                               select
+                                   oferta_dost.oferta_dost_id
+                               from oferta_dost
+                               where
+                                   oferta_dost.artykul_id = :article_id AND
+                                   oferta_dost.klienci_id = :i_clients_id
+                               into
+                                   :oferta_dost_id;
+
+                               update oferta_dost
+                               set
+                                   oferta_dost.cena = :i_price,
+                                   oferta_dost.wazna_do = :i_date_to,
+                                   oferta_dost.wazna_od = :i_date_from,
+                                   oferta_dost.waluta_id = :i_currency_id,
+                                   oferta_dost.czas_dostawy = :i_delivery_time,
+                                   oferta_dost.termin_platnosci = :i_maturity,
+                                   oferta_dost.status = :i_status_for_offer
+                               where
+                                   oferta_dost.oferta_dost_id = :oferta_dost_id;
+
+                               update oferta_dost_spec
+                               set
+                                   oferta_dost_spec.cena = :i_price,
+                                   oferta_dost_spec.ilosc_od = :i_amount_from,
+                                   oferta_dost_spec.ilosc_do = :i_amount_to
+                               where
+                                   oferta_dost_spec.oferta_dost_id = :oferta_dost_id;
+                          end
+                  end
+             end
+
+        end
+    suspend;
+end

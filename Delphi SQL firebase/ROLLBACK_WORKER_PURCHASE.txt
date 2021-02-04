@@ -1,0 +1,25 @@
+create or alter procedure ROLLBACK_WORKER_PURCHASE (
+    I_ORDER_ID integer,
+    I_ODWO_ID integer,
+    I_NAME varchar(100))
+as
+declare variable AMOUNT_OF_PRODUCT_TO_ROLLBACK integer;
+begin
+         select artykul_kiermasz.ilosc
+         from artykul_kiermasz
+         where artykul_kiermasz.artykul_kiermasz_id = :i_order_id
+         into :amount_of_product_to_rollback;
+
+         delete from artykul_kiermasz
+         where
+                artykul_kiermasz.artykul_kiermasz_id = :i_order_id;
+
+
+         update artykul 
+         set artykul.ilosc = artykul.ilosc + :amount_of_product_to_rollback
+         where
+                artykul.odwo_id = :i_odwo_id and
+                artykul.nazwa = :i_name;
+
+    suspend;
+end

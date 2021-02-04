@@ -1,0 +1,81 @@
+create or alter procedure GET_WORKERS_DATA
+returns (
+    REFERENCE_NUMBER_TO_RETURN varchar(100),
+    COUNT_WORKERS_DATA_TO_RETURN integer,
+    NAME_TO_RETURN varchar(150),
+    SURNAME_TO_RETURN varchar(150),
+    ADDRESS_TO_RETURN varchar(150),
+    POSTCODE_TO_RETURN varchar(50),
+    STREET_TO_RETURN varchar(200),
+    HOME_NUMBER_TO_RETURN varchar(50),
+    FLAT_NUMBER_TO_RETURN varchar(50),
+    INSTITUTION_TO_RETURN varchar(100),
+    SEC_REF_NUM_TO_RETURN integer)
+as
+declare variable COUNT_WORKERS_DATA_FROM_TABLE integer;
+begin
+FOR
+  EXECUTE STATEMENT('
+                        SELECT
+                            count(su.slownik_uzytkownik_id)
+                        FROM SLOWNIK_UZYTKOWNIK SU
+                            left join kontrahent kon on upper(su.nazwisko||'' ''||su.imie)=upper(trim(kon.firma)) or  upper(su.imie||'' ''||su.nazwisko)=upper(trim(kon.firma))
+                            left join slownik_adres sa on kon.slownik_adres_id=sa.slownik_adres_id
+                            left join slownik_kod_pocztowy skp on sa.slownik_kod_pocztowy_id=skp.slownik_kod_pocztowy_id
+                            left join slownik_kraj sk on skp.slownik_kraj_id=sk.slownik_kraj_id
+                            left join slownik_zaklad sz on su.slownik_zaklad_id=sz.slownik_zaklad_id
+                        WHERE
+                            su.zatrudniony=1 and su.nr_personalny is not null
+                    ')
+
+         ON EXTERNAL '10.10.10.100:dfm' AS  USER 'kiermasz' PASSWORD '12345678' ROLE 'USER'
+                            INTO
+                                :count_workers_data_to_return
+
+            DO
+            BEGIN
+            suspend;
+            END
+
+
+FOR
+  EXECUTE STATEMENT('
+                        SELECT
+                            su.haslo,
+                            su.imie,
+                            su.nazwisko,
+                            skp.miasto,
+                            skp.kod_pocztowy,
+                            sa.ulica,
+                            sa.nr_domu,
+                            sa.nr_mieszkania,
+                            sz.nazwa,
+                            su.nr_personalny
+                        FROM SLOWNIK_UZYTKOWNIK SU
+                            left join kontrahent kon on upper(su.nazwisko||'' ''||su.imie)=upper(trim(kon.firma)) or  upper(su.imie||'' ''||su.nazwisko)=upper(trim(kon.firma))
+                            left join slownik_adres sa on kon.slownik_adres_id=sa.slownik_adres_id
+                            left join slownik_kod_pocztowy skp on sa.slownik_kod_pocztowy_id=skp.slownik_kod_pocztowy_id
+                            left join slownik_kraj sk on skp.slownik_kraj_id=sk.slownik_kraj_id
+                            left join slownik_zaklad sz on su.slownik_zaklad_id=sz.slownik_zaklad_id
+                        WHERE
+                            su.zatrudniony=1 and su.nr_personalny is not null
+                    ')
+
+         ON EXTERNAL '10.10.10.100:dfm' AS  USER 'kiermasz' PASSWORD '12345678' ROLE 'USER'
+                            INTO
+                                :reference_number_to_return,
+                                :name_to_return,
+                                :surname_to_return,
+                                :address_to_return,
+                                :postcode_to_return,
+                                :street_to_return,
+                                :home_number_to_return,
+                                :flat_number_to_return,
+                                :institution_to_return,
+                                :sec_ref_num_to_return
+
+            DO
+            BEGIN
+            suspend;
+            END
+end

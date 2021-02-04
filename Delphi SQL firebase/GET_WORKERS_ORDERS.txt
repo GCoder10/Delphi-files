@@ -1,0 +1,48 @@
+create or alter procedure GET_WORKERS_ORDERS
+returns (
+    USER_ID_TO_RETURN varchar(100),
+    COUNT_WORKER_ORDERS_TO_RETURN integer,
+    LABEL_TO_RETURN varchar(200),
+    DATE_TO_RETURN timestamp,
+    AMOUNT_TO_RETURN integer,
+    ADDRESS_TO_RETURN varchar(150),
+    POST_CODE_TO_RETURN varchar(150),
+    STREET_TO_RETURN varchar(200),
+    INSTITUTION_TO_RETURN varchar(30))
+as
+declare variable COUNT_WORKER_ORDERS_FROM_TABLE integer;
+begin
+         select
+            count(artykul_kiermasz.user_id)
+         from artykul_kiermasz
+         into
+            :count_worker_orders_from_table;
+
+
+         count_worker_orders_to_return = :count_worker_orders_from_table;
+
+
+
+         for select
+            artykul_kiermasz.user_id,
+            artykul_kiermasz.etykieta,
+            artykul_kiermasz.date_insert,
+            artykul_kiermasz.ilosc,
+            artykul_kiermasz.adres,
+            artykul_kiermasz.kod_pocztowy,
+            artykul_kiermasz.ulica,
+            artykul_kiermasz.zaklad
+         from artykul_kiermasz
+         into
+            :user_id_to_return,
+            :label_to_return,
+            :date_to_return,
+            :amount_to_return,
+            :address_to_return,
+            :post_code_to_return,
+            :street_to_return,
+            :institution_to_return
+         do suspend;
+
+
+end

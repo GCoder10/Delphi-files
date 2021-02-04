@@ -1,0 +1,18 @@
+create or alter procedure IMPORT_DATA_FROM_CSV (
+    I_ODWO_ID integer,
+    I_AB varchar(150),
+    I_NAME varchar(80),
+    I_NAME_OF_FABRIC varchar(80),
+    I_NAME_OF_FABRIC2 varchar(80),
+    I_NAME_OF_CORPUS varchar(80),
+    I_AMOUNT integer,
+    I_PARENT_OF_ARTICLE_ID integer,
+    I_QBM decimal(15,2),
+    I_PRICE decimal(15,2))
+as
+begin
+
+         insert into artykul (artykul_id, odwo_id, ab, nazwa, tkanina_nazwa, tkanina_nazwa2, nazwa_korpusu, ilosc, artykul_rodzic_id, qbm, cena)
+         values (gen_id(gen_artykul_id, 1), :i_odwo_id, :i_ab, :i_name, :i_name_of_fabric, :i_name_of_fabric2, :i_name_of_corpus, :i_amount, :i_parent_of_article_id, :i_qbm, :i_price);
+    suspend;
+end

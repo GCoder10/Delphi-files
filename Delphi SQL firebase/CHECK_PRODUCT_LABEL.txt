@@ -1,0 +1,21 @@
+create or alter procedure CHECK_PRODUCT_LABEL (
+    I_LABEL integer)
+returns (
+    ODWO_ID_TO_RETURN integer)
+as
+declare variable ODWO_ID_FROM_TABLE integer;
+begin
+
+         select
+            artykul.odwo_id
+         from artykul
+         where
+            artykul.odwo_id = :i_label
+         into
+            :odwo_id_from_table;
+
+
+         odwo_id_to_return = :odwo_id_from_table;
+
+    suspend;
+end
